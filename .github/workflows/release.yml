@@ -16,7 +16,7 @@ jobs:
     name: Verify tag matches the project version
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Compare tag with CMake project version
         run: |
@@ -36,7 +36,7 @@ jobs:
     needs: check
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install toolchain and GUI dependencies
         run: |
@@ -60,7 +60,7 @@ jobs:
       - name: Package
         run: tar -czf "Deimos-${GITHUB_REF_NAME}-linux-x86_64.tar.gz" -C staging .
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: linux
           path: Deimos-*-linux-x86_64.tar.gz
@@ -71,7 +71,7 @@ jobs:
     needs: check
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Configure
         run: cmake -S . -B build -A x64 -DDEIMOS_BUILD_TESTS=ON
@@ -89,7 +89,7 @@ jobs:
         shell: pwsh
         run: Compress-Archive -Path staging\* -DestinationPath "Deimos-$env:GITHUB_REF_NAME-windows-x86_64.zip"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: windows
           path: Deimos-*-windows-x86_64.zip
@@ -100,7 +100,7 @@ jobs:
     needs: [linux, windows]
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: dist
           merge-multiple: true
